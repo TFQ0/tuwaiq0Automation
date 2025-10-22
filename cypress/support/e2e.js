@@ -16,4 +16,15 @@
 /// <reference types="cypress"/>
 
 // Import commands.js using ES2015 syntax:
-// import './commands'
+import './commands'
+
+// Import HTML Reporter
+import 'cypress-mochawesome-reporter/register';
+
+// Take screenshot on test failure
+Cypress.on('test:after:run', (test, runnable) => {
+  if (test.state === 'failed') {
+    const screenshot = `${runnable.parent.title} -- ${test.title} (failed)`;
+    cy.screenshot(screenshot);
+  }
+});

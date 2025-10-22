@@ -1,5 +1,19 @@
 {
+  "name": "tuwaiq-automation",
+  "version": "1.0.0",
+  "description": "Automation for aldiwan website - Tuwaiq Academy",
+  "scripts": {
+    "test": "cypress run",
+    "test:order":"order",
+    "test:headed": "cypress run --headed",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox",
+    "test:edge": "cypress run --browser edge",
+    "cypress:open": "cypress open",
+    "report:open": "start cypress/reports/index.html"
+  },
   "devDependencies": {
-    "cypress": "^15.4.0"
+    "cypress": "^15.4.0",
+    "cypress-mochawesome-reporter": "^4.0.2"
   }
 }
