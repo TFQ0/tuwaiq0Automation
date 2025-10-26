@@ -3,3 +3,4 @@ cypress/reports/html/
 cypress/reports/videos/
 cypress/videos/
 cypress/screenshots/
+cypress/reports
