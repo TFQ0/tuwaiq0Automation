@@ -4,7 +4,6 @@
   "description": "Automation for siwar website - Tuwaiq Academy",
   "scripts": {
     "test": "cypress run",
-    "test:order": "order",
     "test:headed": "cypress run --headed",
     "test:chrome": "cypress run --browser chrome",
     "test:firefox": "cypress run --browser firefox",
