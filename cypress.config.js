@@ -10,7 +10,7 @@ module.exports = defineConfig({
     reportDir: 'cypress/reports',
     overwrite: false,
     html: true,
-    json: true,
+    json: false,
     charts: true,
     reportPageTitle: 'Tuwaiq Automation Test Report',
     embeddedScreenshots: true,
@@ -48,7 +48,7 @@ module.exports = defineConfig({
     pageLoadTimeout: 60000,
     
     // Test isolation
-    testIsolation: false,
+    testIsolation: true,
     
     // Experimental features - Cypress Studio for recording tests
     experimentalStudio: true,

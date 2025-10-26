@@ -1,4 +1,4 @@
-describe('Home Page Verification', function() {
+describe('2- Home Page Verification', function() {
     
 it('home v', function() {
     cy.visit('https://siwar.ksaa.gov.sa/home')

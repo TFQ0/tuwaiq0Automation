@@ -1,8 +1,4 @@
-describe('about us page', function() {
-
-    
-    
-});
+describe('3- about us page Verification', function() {
 
 it('Test 1: about us page', function() {
     cy.visit('https://siwar.ksaa.gov.sa/aboutus')
@@ -76,4 +72,9 @@ it('Test 1: about us page', function() {
     cy.get('#home div.focused p:nth-child(2)').click();
     cy.wait(1000);
 });
+
+    
+    
+});
+
 
