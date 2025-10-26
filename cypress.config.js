@@ -27,7 +27,7 @@ module.exports = defineConfig({
     },
     
     // Base URL for your tests
-    baseUrl: 'https://www.aldiwan.net/',
+    baseUrl: 'https://siwar.ksaa.gov.sa/',
     
     // Viewport settings
     viewportWidth: 1280,
