@@ -5,6 +5,10 @@
   "scripts": {
     "test": "cypress run",
     "test:headed": "cypress run --headed",
+    "test:headed:chrome": "cypress run --headed --browser chrome --no-exit",
+    "test:login": "cypress run --headed --browser chrome --spec 'cypress/e2e/1-Login/**'",
+    "test:login:api": "cypress run --spec 'cypress/e2e/1-Login/2-login-api.cy.js'",
+    "test:ci": "cypress run --spec 'cypress/e2e/**/*-api.cy.js'",
     "test:chrome": "cypress run --browser chrome",
     "test:firefox": "cypress run --browser firefox",
     "test:edge": "cypress run --browser edge",
