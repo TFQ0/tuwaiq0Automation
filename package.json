@@ -1,25 +1,17 @@
 {
-  "name": "tuwaiq-automation",
+  "name": "falakauto123",
   "version": "1.0.0",
-  "description": "Automation for siwar website - Tuwaiq Academy",
+  "description": "Falak Automation Test Suite",
   "scripts": {
-    "test": "cypress run",
-    "test:headed": "cypress run --headed",
-    "test:headed:chrome": "cypress run --headed --browser chrome --no-exit",
-    "test:login": "cypress run --headed --browser chrome --spec 'cypress/e2e/1-Login/**'",
-    "test:login:api": "cypress run --spec 'cypress/e2e/1-Login/2-login-api.cy.js'",
-    "test:ci": "cypress run --spec 'cypress/e2e/**/*-api.cy.js'",
-    "test:chrome": "cypress run --browser chrome",
-    "test:firefox": "cypress run --browser firefox",
-    "test:edge": "cypress run --browser edge",
+    "test": "cypress run --spec 'cypress/e2e/TestSuiteIntegrationFalak.cy.js'",
+    "test:headed": "cypress open --e2e --spec 'cypress/e2e/TestSuiteIntegrationFalak.cy.js'",
     "cypress:open": "cypress open",
-    "report:open": "start cypress/reports/index.html"
+    "cypress:run": "cypress run",
+    "clean:reports": "node -e \"const fs=require('fs'); const path=require('path'); ['cypress/videos','cypress/screenshots','cypress/reports'].forEach(dir=>{if(fs.existsSync(dir)){fs.rmSync(dir,{recursive:true,force:true}); fs.mkdirSync(dir,{recursive:true}); console.log('Cleaned: '+dir);}});\""
   },
   "devDependencies": {
-    "axe-core": "^4.11.0",
-    "cypress": "^15.5.0",
-    "cypress-audit": "^1.1.0",
-    "cypress-axe": "^1.7.0",
-    "cypress-mochawesome-reporter": "^4.0.2"
+    "cypress": "^15.3.0",
+    "cypress-mochawesome-reporter": "^3.8.2"
   }
 }
+

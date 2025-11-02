@@ -7,13 +7,10 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-
-// ***********************************************
-// Custom Cypress Commands Configuration
-// ***********************************************
-
+//
+//
 // ====== Global Delay (for visual clarity / stability) ======
-const COMMAND_DELAY = 1500; // delay in ms between actions
+const COMMAND_DELAY = 5000; // delay in ms between actions
 
 ['click', 'type', 'clear', 'visit'].forEach((command) => {
   Cypress.Commands.overwrite(command, (originalFn, ...args) => {
@@ -21,103 +18,36 @@ const COMMAND_DELAY = 1500; // delay in ms between actions
     cy.wait(COMMAND_DELAY);
   });
 });
-
-// ====== Custom Login Command (UI with CAPTCHA) ======
-// This requires manual CAPTCHA solving ONCE per session
-// Cypress.Commands.add('login', (email, password) => {
-//   cy.session(
-//     [email, password], 
-//     () => {
-//       // Set up intercept to catch the login API call
-//       cy.intercept('POST', '**/api/auth/login').as('loginRequest');
-      
-//       cy.visit('https://siwar.ksaa.gov.sa/login');
-
-//       cy.get('#email').type(email);
-//       cy.get('input.password-icon').type(`${password}{enter}`);
-
-//       //  pause for manual CAPTCHA solving (only needed ONCE)
-//       cy.pause();
-
-//       // Wait for the login request to complete successfully (status 201)
-//       cy.wait('@loginRequest').its('response.statusCode').should('eq', 201);
-
-//       // Verify successful login before saving the session
-//       cy.url().should('include', '/dashboard');
-//     },
-//     {
-//       validate() {
-//         // Validate that the session is still valid
-//         cy.request({
-//           url: 'https://siwar.ksaa.gov.sa/dashboard',
-//           failOnStatusCode: false
-//         }).then((resp) => {
-//           expect(resp.status).to.eq(200);
-//         });
-//       },
-//       cacheAcrossSpecs: true // Share session across ALL test files
-//     }
-//   );
-// });
-
-// ====== API Login Command (NO CAPTCHA) ======
-// Bypasses UI login entirely - use this for automated CI/CD pipelines
-Cypress.Commands.add('loginViaAPI', (email, password) => {
-  cy.session(
-    ['api', email, password],
-    () => {
-      cy.request({
-        method: 'POST',
-        url: 'https://siwar.ksaa.gov.sa/api/auth/login',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: {
-          username: email,  // API expects 'username' field (from Bruno API spec)
-          password: password
-        },
-        failOnStatusCode: false
-      }).then((response) => {
-        expect(response.status).to.eq(201);
+// ====== Custom Login Command with Session ======
+/**
+ * Login command that saves and restores the session
+ * This allows you to log in once and reuse the session across multiple tests
+ * 
+ * Usage in tests:
+ *   cy.loginToFalak() - logs in with credentials from fixture
+ */
+Cypress.Commands.add('loginToFalak', () => {
+  cy.fixture('FalakTestData').then((testData) => {
+    cy.session(
+      'falak-user-session', // Session name/key
+      () => {
+        // This function runs only once to create the session
+        cy.visit(`${testData.bestUrl}/auth/login`);
+        cy.get('#username').type(testData.username);
+        cy.get('div:nth-of-type(2) input').type(testData.password);
+        cy.get('div.p-checkbox-box').click();
+        cy.get('button > span').click();
         
-        // Store the JWT token from response (lowercase 'token')
-        if (response.body.token) {
-          const token = response.body.token;
-          
-          // Visit a page to set localStorage (cy.request doesn't have window access)
-          cy.visit('https://siwar.ksaa.gov.sa/dashboard', { failOnStatusCode: false });
-          cy.window().then((win) => {
-            win.localStorage.setItem('authToken', token);
-          });
-          
-          // Log success for debugging
-          cy.log('API Login successful, JWT token stored');
-        }
-        
-        // Cookies should be automatically stored by cy.request
-      });
-    },
-    {
-      validate() {
-        // Validate session by checking if token exists and dashboard is accessible
-        cy.visit('https://siwar.ksaa.gov.sa/dashboard', { failOnStatusCode: false });
-        cy.window().then((win) => {
-          const token = win.localStorage.getItem('authToken');
-          expect(token).to.exist;
-        });
+        // Wait for login to complete
+        cy.url().should('include', '/d'); // Verify we're logged in
       },
-      cacheAcrossSpecs: true
-    }
-  );
+      {
+        cacheAcrossSpecs: true // Share session between different test files
+      }
+    );
+  });
 });
 
-
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
 // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
 //
