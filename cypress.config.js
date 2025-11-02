@@ -1,62 +1,52 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  // Video recording for all tests
-  video: true,
-  
-  // HTML Reporter configuration
-  reporter: 'cypress-mochawesome-reporter',
-  reporterOptions: {
-    reportDir: 'cypress/reports',
-    overwrite: false,
-    html: true,
-    json: false,
-    charts: true,
-    reportPageTitle: 'Tuwaiq Automation Test Report',
-    embeddedScreenshots: true,
-    inlineAssets: true,
-    saveAllAttempts: false,
-  },
-  
   e2e: {
     setupNodeEvents(on, config) {
-      // HTML Reporter plugin
+      // implement node event listeners here
       require('cypress-mochawesome-reporter/plugin')(on);
-      
-      return config;
     },
+
+    testIsolation: true,
     
-    // Base URL for your tests
-    baseUrl: 'https://siwar.ksaa.gov.sa/',
+    // Video Recording Configuration
+    video: true,
+    videoCompression: false, // Disable compression to prevent corruption
+    videosFolder: 'cypress/videos',
     
-    // Viewport settings
-    viewportWidth: 1280,
-    viewportHeight: 720,
-    
-    // Screenshot configuration
+    // Screenshot Configuration
     screenshotOnRunFailure: true,
     screenshotsFolder: 'cypress/screenshots',
     
-    // Video configuration
-    videosFolder: 'cypress/videos',
-    videoCompression: 32,
+    // Reporter Configuration
+    reporter: 'cypress-mochawesome-reporter',
+    reporterOptions: {
+      reportDir: 'cypress/reports',
+      charts: true,
+      reportPageTitle: 'Falak Automation Test Report',
+      embeddedScreenshots: true,
+      inlineAssets: true,
+      videoOnFailOnly: false, // Include all videos in report
+      saveAllAttempts: false,
+      overwrite: false,
+      html: true,
+      json: true,
+      timestamp: 'mmddyyyy_HHMMss',
+      videoCompression: false // Ensure no video compression
+    },
     
-    // Timeout configurations
-    defaultCommandTimeout: 20000,
-    requestTimeout: 5000,
-    responseTimeout: 30000,
+    // Viewport Configuration
+    // viewportWidth: 1920,
+    // viewportHeight: 1080,
+    
+    // Timeout Configuration
+    defaultCommandTimeout: 50000,
     pageLoadTimeout: 60000,
     
-    // Test isolation
-    testIsolation: true,
-    
-    // Experimental features - Cypress Studio for recording tests
-    experimentalStudio: true,
-    
-    // Retry configuration
+    // Retry Configuration
     retries: {
-      runMode: 2,
+      runMode: 1,
       openMode: 0
     }
-  }
+  },
 });
