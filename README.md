@@ -3,7 +3,7 @@
 
 ##  Project Overview
 
-This is an automated testing suite for the **Siwar Website** (https:/falak.ksaa.gov.sa/), developed using Cypress framework. The project aims to ensure quality and reliability of the falak platform through comprehensive end-to-end testing.
+This is an automated testing suite for the **Falak Website** (https:/falak.ksaa.gov.sa/), developed using Cypress framework. The project aims to ensure quality and reliability of the falak platform through comprehensive end-to-end testing.
 
 ### Project Details
 - **Framework:** Cypress v15.5.0
